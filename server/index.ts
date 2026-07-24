@@ -9,14 +9,26 @@ import { errorHandler } from './middleware/errorHandler.js';
 
 const app = express();
 const port = Number(process.env.PORT) || 3001;
-const allowedOrigins = [
+const localOrigins = [
   'http://localhost:3000',
   'http://localhost:3002',
-  'https://page-pulse-mauvre-zeta.vercel.app',
 ];
 
 const corsOptions = {
-  origin: allowedOrigins,
+  origin(origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) {
+    if (!origin) {
+      return callback(null, true);
+    }
+
+    if (
+      localOrigins.includes(origin) ||
+      origin.endsWith('.vercel.app')
+    ) {
+      return callback(null, true);
+    }
+
+    return callback(new Error(`Origin not allowed: ${origin}`));
+  },
   methods: ['GET', 'POST', 'OPTIONS'],
   credentials: false,
 };
