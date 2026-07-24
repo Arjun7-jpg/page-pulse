@@ -145,27 +145,28 @@ const App = () => {
 
         {loading ? <Loading /> : null}
 
-        <section id="results" className="space-y-6">
-          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
-            <div>
-              <p className="text-sm uppercase tracking-[0.35em] text-cyan-300/80">Results</p>
-              <h2 className="text-3xl font-semibold text-white">Your audit summary</h2>
-            </div>
-            <button
-              type="button"
-              onClick={copyJson}
-              disabled={!result?.data}
-              className="inline-flex items-center justify-center rounded-3xl border border-slate-700 bg-slate-950/75 px-6 py-3 text-sm font-semibold text-slate-100 transition-all duration-300 hover:border-slate-500 hover:bg-slate-900/90 disabled:cursor-not-allowed disabled:opacity-70"
-            >
-              Copy JSON
-            </button>
-          </div>
-          <ResultCards data={result?.data ?? { url: '', title: null, metaDescription: null, visibleText: '', wordCount: 0, imageCount: 0, responseTime: 0 }} />
-        </section>
-      </main>
-      <Footer />
-    </div>
-  );
-};
+        <{result?.data && (
+  <section id="results" className="space-y-6">
+    <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+      <div>
+        <p className="text-sm uppercase tracking-[0.35em] text-cyan-300/80">
+          Results
+        </p>
+        <h2 className="text-3xl font-semibold text-white">
+          Your audit summary
+        </h2>
+      </div>
 
+      <button
+        type="button"
+        onClick={copyJson}
+        className="inline-flex items-center justify-center rounded-3xl border border-slate-700 bg-slate-950/75 px-6 py-3 text-sm font-semibold text-slate-100 transition-all duration-300 hover:border-slate-500 hover:bg-slate-900/90"
+      >
+        Copy JSON
+      </button>
+    </div>
+
+    <ResultCards data={result.data} />
+  </section>
+)}
 export default App;
