@@ -38,7 +38,6 @@ app.use(morgan('combined'));
 app.use(compression());
 app.use(express.json({ limit: '1mb' }));
 app.use(cors(corsOptions));
-app.options('*', cors(corsOptions));
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
