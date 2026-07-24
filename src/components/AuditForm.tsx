@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { useState } from 'react';
-import PremiumButton from './PremiumButton';
 import PremiumInput from './PremiumInput';
 import type { AuditResponse } from '../types';
 
@@ -51,13 +50,14 @@ const AuditForm = ({ onSubmit, loading, error, result }: AuditFormProps) => {
             placeholder="https://example.com"
             required
           />
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <PremiumButton type="submit" disabled={loading} className="w-full sm:w-auto">
+              <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+            <button
+              type="submit"
+              disabled={loading}
+              className="inline-flex w-full max-w-xs items-center justify-center rounded-3xl bg-cyan-500 px-6 py-3 text-sm font-semibold text-slate-950 transition-all duration-300 hover:bg-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
+            >
               {loading ? 'Auditing…' : 'Run audit'}
-            </PremiumButton>
-            <PremiumButton type="button" variant="secondary" disabled className="w-full sm:w-auto">
-              Premium analysis
-            </PremiumButton>
+            </button>
           </div>
         </div>
         {error ? <p className="mt-4 text-sm text-rose-400">{error}</p> : null}
@@ -84,7 +84,7 @@ const AuditForm = ({ onSubmit, loading, error, result }: AuditFormProps) => {
           </div>
         ) : (
           <div className="mt-6 rounded-[1.75rem] border border-white/10 bg-white/5 p-5 text-sm text-slate-400">
-            Enter a page URL to view a premium audit summary with instant feedback and polished results.
+            Enter a page URL to view an audit summary with instant feedback and polished results.
           </div>
         )}
       </motion.div>

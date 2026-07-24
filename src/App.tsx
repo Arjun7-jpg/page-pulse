@@ -6,7 +6,6 @@ import Loading from './components/Loading';
 import ResultCards from './components/ResultCards';
 import PremiumBackground from './components/PremiumBackground';
 import Footer from './components/Footer';
-import PremiumButton from './components/PremiumButton';
 import type { AuditResponse } from './types';
 
 const App = () => {
@@ -66,23 +65,31 @@ const App = () => {
           <div className="grid gap-10 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
             <div className="space-y-6">
               <p className="inline-flex rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-xs uppercase tracking-[0.35em] text-cyan-200">
-                Premium audit engine
+                Audit engine
               </p>
               <div className="space-y-6">
                 <h1 className="max-w-3xl text-5xl font-semibold tracking-tight text-white sm:text-6xl">
                   Transform any page into a <span className="bg-gradient-to-r from-violet-300 via-cyan-300 to-sky-200 bg-clip-text text-transparent">high-impact audit snapshot</span>.
                 </h1>
                 <p className="max-w-2xl text-lg leading-8 text-slate-300">
-                  Analyze titles, metadata, visible text, and performance signals with a premium dashboard built for modern teams.
+                  Analyze titles, metadata, visible text, and performance signals with a polished dashboard built for modern teams.
                 </p>
               </div>
               <div className="flex flex-wrap gap-4">
-                <PremiumButton onClick={() => document.getElementById('audit-form')?.scrollIntoView({ behavior: 'smooth' })}>
+                <button
+                  type="button"
+                  onClick={() => document.getElementById('audit-form')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="inline-flex items-center justify-center rounded-3xl bg-cyan-500 px-6 py-3 text-sm font-semibold text-slate-950 transition-all duration-300 hover:bg-cyan-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950"
+                >
                   Start audit
-                </PremiumButton>
-                <PremiumButton variant="secondary" onClick={() => document.getElementById('results')?.scrollIntoView({ behavior: 'smooth' })}>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => document.getElementById('results')?.scrollIntoView({ behavior: 'smooth' })}
+                  className="inline-flex items-center justify-center rounded-3xl border border-slate-700 bg-slate-950/75 px-6 py-3 text-sm font-semibold text-slate-100 transition-all duration-300 hover:border-slate-500 hover:bg-slate-900/90"
+                >
                   View sample results
-                </PremiumButton>
+                </button>
               </div>
             </div>
             <div className="relative rounded-[2rem] border border-white/10 bg-slate-950/80 p-8 shadow-2xl shadow-slate-950/40 backdrop-blur-xl">
@@ -144,9 +151,14 @@ const App = () => {
               <p className="text-sm uppercase tracking-[0.35em] text-cyan-300/80">Results</p>
               <h2 className="text-3xl font-semibold text-white">Your audit summary</h2>
             </div>
-            <PremiumButton variant="secondary" onClick={copyJson} disabled={!result?.data}>
+            <button
+              type="button"
+              onClick={copyJson}
+              disabled={!result?.data}
+              className="inline-flex items-center justify-center rounded-3xl border border-slate-700 bg-slate-950/75 px-6 py-3 text-sm font-semibold text-slate-100 transition-all duration-300 hover:border-slate-500 hover:bg-slate-900/90 disabled:cursor-not-allowed disabled:opacity-70"
+            >
               Copy JSON
-            </PremiumButton>
+            </button>
           </div>
           <ResultCards data={result?.data ?? { url: '', title: null, metaDescription: null, visibleText: '', wordCount: 0, imageCount: 0, responseTime: 0 }} />
         </section>

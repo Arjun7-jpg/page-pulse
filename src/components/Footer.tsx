@@ -7,7 +7,7 @@ const Footer = () => (
       <div className="space-y-3 text-slate-300">
         <p className="text-sm uppercase tracking-[0.35em] text-cyan-300/80">Digital Heroes Training Task</p>
         <p className="max-w-2xl text-sm leading-6 text-slate-400">
-          Built as a premium audit experience with modern motion, glass UI, and subtle performance-focused interactions.
+          Built as a modern audit experience with motion, glass UI, and subtle performance-focused interactions.
         </p>
       </div>
       <div className="flex flex-wrap items-center gap-3">
