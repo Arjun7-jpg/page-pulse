@@ -25,8 +25,8 @@ const App = () => {
     setResult(null);
 
     try {
-      const apiBaseUrl = (import.meta.env.VITE_API_URL ?? '').trim();
-      const auditUrl = apiBaseUrl ? `${apiBaseUrl}/api/audit` : '/api/audit';
+      const apiBaseUrl = (import.meta.env.VITE_API_URL ?? 'https://page-pulse-h9zm.onrender.com').trim();
+      const auditUrl = `${apiBaseUrl}/api/audit`;
       const response = await fetch(auditUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

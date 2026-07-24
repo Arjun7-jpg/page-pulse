@@ -6,7 +6,7 @@
 2. Create a new Vercel project and connect the repository.
 3. Set the framework preset to Vite.
 4. Add the environment variable:
-   - VITE_API_URL = https://your-backend-url.onrender.com
+   - VITE_API_URL = https://page-pulse-h9zm.onrender.com
 5. Deploy.
 
 ## Backend (Render)
