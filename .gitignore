@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+
+# Build output
+/dist/
+/dist-server/
+*.tsbuildinfo
+.vite/
+
+# Environment files
+.env
+.env.local
+.env.*
+!.env.example
+
+# Test and coverage output
+coverage/
+
+# OS / editor junk
+.DS_Store
+.vscode/
+*.log
+

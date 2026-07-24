@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: page-pulse-api
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build:server
+    startCommand: node dist-server/index.js
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: CORS_ORIGIN
+        value: https://your-frontend-domain.vercel.app,http://localhost:3000
