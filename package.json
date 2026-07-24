@@ -9,6 +9,7 @@
     "preview": "vite preview",
     "dev:server": "node --loader ts-node/esm server/index.ts",
     "build:server": "tsc -p tsconfig.server.json",
+    "test": "vitest run",
     "lint": "eslint . --ext .ts,.tsx"
   },
   "dependencies": {

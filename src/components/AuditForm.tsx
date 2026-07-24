@@ -63,31 +63,33 @@ const AuditForm = ({ onSubmit, loading, error, result }: AuditFormProps) => {
         {error ? <p className="mt-4 text-sm text-rose-400">{error}</p> : null}
       </motion.form>
 
-      <motion.div
-        className="rounded-[2rem] border border-white/10 bg-slate-900/80 p-8 shadow-2xl shadow-slate-950/40 backdrop-blur-xl"
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1, duration: 0.55, ease: 'easeOut' }}
-      >
-        <div className="flex items-center justify-between gap-4">
-          <p className="text-sm font-semibold uppercase tracking-[0.35em] text-sky-300">Quick glance</p>
-          <ArrowRight size={18} className="text-slate-400" />
-        </div>
-        <ul className="mt-6 space-y-4 text-sm text-slate-300">
-          <li>• Fetches the page content through the backend</li>
-          <li>• Extracts metadata, visible text, and image count</li>
-          <li>• Returns response time and a compact summary</li>
-        </ul>
-        {result?.data ? (
-          <div className="mt-6 rounded-[1.75rem] border border-emerald-500/10 bg-emerald-500/5 p-5 text-sm text-emerald-200">
-            Audit completed for <span className="font-semibold text-white">{result.data.url}</span>
+      {!error && (
+        <motion.div
+          className="rounded-[2rem] border border-white/10 bg-slate-900/80 p-8 shadow-2xl shadow-slate-950/40 backdrop-blur-xl"
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.55, ease: 'easeOut' }}
+        >
+          <div className="flex items-center justify-between gap-4">
+            <p className="text-sm font-semibold uppercase tracking-[0.35em] text-sky-300">Quick glance</p>
+            <ArrowRight size={18} className="text-slate-400" />
           </div>
-        ) : (
-          <div className="mt-6 rounded-[1.75rem] border border-white/10 bg-white/5 p-5 text-sm text-slate-400">
-            Enter a page URL to view an audit summary with instant feedback and polished results.
-          </div>
-        )}
-      </motion.div>
+          <ul className="mt-6 space-y-4 text-sm text-slate-300">
+            <li>• Fetches the page content through the backend</li>
+            <li>• Extracts metadata, visible text, and image count</li>
+            <li>• Returns response time and a compact summary</li>
+          </ul>
+          {result?.data ? (
+            <div className="mt-6 rounded-[1.75rem] border border-emerald-500/10 bg-emerald-500/5 p-5 text-sm text-emerald-200">
+              Audit completed for <span className="font-semibold text-white">{result.data.url}</span>
+            </div>
+          ) : (
+            <div className="mt-6 rounded-[1.75rem] border border-white/10 bg-white/5 p-5 text-sm text-slate-400">
+              Enter a page URL to view an audit summary with instant feedback and polished results.
+            </div>
+          )}
+        </motion.div>
+      )}
     </motion.section>
   );
 };

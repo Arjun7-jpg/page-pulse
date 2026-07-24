@@ -9,10 +9,15 @@ import { errorHandler } from './middleware/errorHandler.js';
 
 const app = express();
 const port = Number(process.env.PORT) || 3001;
-const localOrigins = [
+const defaultOrigins = [
   'http://localhost:3000',
+  'http://127.0.0.1:3000',
   'http://localhost:3002',
 ];
+const configuredOrigins = process.env.CORS_ORIGIN
+  ? process.env.CORS_ORIGIN.split(',').map((origin) => origin.trim()).filter(Boolean)
+  : [];
+const allowedOrigins = [...new Set([...defaultOrigins, ...configuredOrigins])];
 
 const corsOptions = {
   origin(origin: string | undefined, callback: (err: Error | null, allow?: boolean) => void) {
@@ -21,7 +26,7 @@ const corsOptions = {
     }
 
     if (
-      localOrigins.includes(origin) ||
+      allowedOrigins.includes(origin) ||
       origin.endsWith('.vercel.app')
     ) {
       return callback(null, true);

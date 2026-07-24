@@ -24,8 +24,11 @@ const App = () => {
     setResult(null);
 
     try {
-      const apiBaseUrl = (import.meta.env.VITE_API_URL ?? 'https://page-pulse-h9zm.onrender.com').trim();
-      const auditUrl = `${apiBaseUrl}/api/audit`;
+     const apiBaseUrl = (
+  import.meta.env.VITE_API_URL ??
+  'https://page-pulse-h9zm.onrender.com'
+).trim();
+      const auditUrl = `${apiBaseUrl.replace(/\/$/, '')}/api/audit`;
       const response = await fetch(auditUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -127,7 +130,7 @@ const App = () => {
             <div className="grid gap-4 sm:grid-cols-2">
               {[
                 { title: 'Fast audit', description: 'Instant page evaluation with minimal UI noise.' },
-                { title: 'Premium visual design', description: 'Glassmorphism, motion, and elegant spacing.' },
+                { title: 'Modern visual design', description: 'Glassmorphism, motion, and elegant spacing.' },
                 { title: 'Secure backend', description: 'Express-powered audit API with CORS protection.' },
                 { title: 'Fully responsive', description: 'Designed for desktop, tablet, and mobile.' },
               ].map((item) => (
@@ -145,6 +148,7 @@ const App = () => {
 
         {loading ? <Loading /> : null}
 
+<<<<<<< HEAD
         <{result?.data && (
   <section id="results" className="space-y-6">
     <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
@@ -156,6 +160,31 @@ const App = () => {
           Your audit summary
         </h2>
       </div>
+=======
+        {result?.data ? (
+          <section id="results" className="space-y-6">
+            <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+              <div>
+                <p className="text-sm uppercase tracking-[0.35em] text-cyan-300/80">Results</p>
+                <h2 className="text-3xl font-semibold text-white">Your audit summary</h2>
+              </div>
+              <button
+                type="button"
+                onClick={copyJson}
+                className="inline-flex items-center justify-center rounded-3xl border border-slate-700 bg-slate-950/75 px-6 py-3 text-sm font-semibold text-slate-100 transition-all duration-300 hover:border-slate-500 hover:bg-slate-900/90"
+              >
+                Copy JSON
+              </button>
+            </div>
+            <ResultCards data={result.data} />
+          </section>
+        ) : null}
+      </main>
+      <Footer />
+    </div>
+  );
+};
+>>>>>>> 5c3aedc (Fix audit flow and UI rendering)
 
       <button
         type="button"
