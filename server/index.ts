@@ -3,34 +3,30 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';
+import cors from 'cors';
 import auditRouter from './routes/audit.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
 const app = express();
 const port = Number(process.env.PORT) || 3001;
-const configuredOrigins = (process.env.CORS_ORIGIN || 'http://localhost:3000')
-  .split(',')
-  .map((value) => value.trim())
-  .filter(Boolean);
-const allowedOrigins = [...new Set([...configuredOrigins, 'http://localhost:3000', 'http://127.0.0.1:3000'])];
+const allowedOrigins = [
+  'http://localhost:3000',
+  'http://localhost:3002',
+  'https://page-pulse-mauvre-zeta.vercel.app',
+];
+
+const corsOptions = {
+  origin: allowedOrigins,
+  methods: ['GET', 'POST', 'OPTIONS'],
+  credentials: false,
+};
 
 app.use(helmet());
 app.use(morgan('combined'));
 app.use(compression());
 app.use(express.json({ limit: '1mb' }));
-app.use((req, res, next) => {
-  const origin = req.headers.origin;
-  if (origin && allowedOrigins.includes(origin)) {
-    res.header('Access-Control-Allow-Origin', origin);
-  }
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-  if (req.method === 'OPTIONS') {
-    res.sendStatus(204);
-    return;
-  }
-  next();
-});
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
