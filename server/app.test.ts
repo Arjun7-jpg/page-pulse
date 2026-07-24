@@ -50,6 +50,34 @@ describe('POST /api/audit', () => {
     expect(response.body.success).toBe(false);
   });
 
+  it('rejects Cloudflare challenge pages as blocked', async () => {
+    mockedAxios.get.mockResolvedValueOnce({
+      data: '<html><head><title>Just a moment...</title></head><body><div id="cf-browser-verification">Please enable JavaScript</div></body></html>',
+      headers: { 'content-type': 'text/html; charset=utf-8' },
+    });
+
+    const app = createApp();
+    const response = await request(app).post('/api/audit').send({ url: 'https://www.friv.com' });
+
+    expect(response.status).toBe(422);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe('This website prevents automated analysis. Please try another public website.');
+  });
+
+  it('rejects pages that ask to enable JavaScript', async () => {
+    mockedAxios.get.mockResolvedValueOnce({
+      data: '<html><head><title>Please enable JavaScript</title></head><body><p>Please enable JavaScript to continue.</p></body></html>',
+      headers: { 'content-type': 'text/html; charset=utf-8' },
+    });
+
+    const app = createApp();
+    const response = await request(app).post('/api/audit').send({ url: 'https://www.friv.com' });
+
+    expect(response.status).toBe(422);
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe('This website prevents automated analysis. Please try another public website.');
+  });
+
   it('handles timeout errors', async () => {
     mockedAxios.get.mockRejectedValueOnce({ code: 'ETIMEDOUT' });
 

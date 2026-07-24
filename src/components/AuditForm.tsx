@@ -55,10 +55,9 @@ const AuditForm = ({ onSubmit, loading, error, result }: AuditFormProps) => {
             <PremiumButton type="submit" disabled={loading} className="w-full sm:w-auto">
               {loading ? 'Auditing…' : 'Run audit'}
             </PremiumButton>
-            <span className="inline-flex items-center gap-2 rounded-full border border-slate-800/80 bg-slate-950/80 px-4 py-3 text-sm text-slate-300">
-              <Sparkles size={16} className="text-cyan-300" />
+            <PremiumButton type="button" variant="secondary" disabled className="w-full sm:w-auto">
               Premium analysis
-            </span>
+            </PremiumButton>
           </div>
         </div>
         {error ? <p className="mt-4 text-sm text-rose-400">{error}</p> : null}

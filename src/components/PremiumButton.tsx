@@ -16,7 +16,7 @@ const PremiumButton = ({ variant = 'primary', children, className = '', ...props
     whileHover={{ scale: 1.02 }}
     whileTap={{ scale: 0.98 }}
     transition={{ type: 'spring', stiffness: 320, damping: 24 }}
-    className={`inline-flex items-center justify-center rounded-3xl px-6 py-3 text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 ${variants[variant]} ${className}`}
+    className={`inline-flex items-center justify-center rounded-3xl px-6 py-3 text-sm font-semibold transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-950 disabled:cursor-not-allowed disabled:opacity-70 ${variants[variant]} ${className}`}
     {...props}
   >
     {children}

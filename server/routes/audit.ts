@@ -6,6 +6,45 @@ import { validateAuditRequest } from '../middleware/validation.js';
 
 const router = Router();
 
+const blockedPatterns = [
+  /please enable javascript/i,
+  /enable javascript/i,
+  /captcha/i,
+  /access denied/i,
+  /request blocked/i,
+  /just a moment/i,
+  /attention required/i,
+  /verify you are human/i,
+  /check the box/i,
+  /cloudflare/i,
+  /cf-browser-verification/i,
+  /jschl_vc/i,
+  /challenge-form/i,
+  /please turn javascript on/i,
+  /this website is operating under/i,
+  /debug/i,
+];
+
+const blockedMessage = 'This website prevents automated analysis. Please try another public website.';
+
+const detectBlockedContent = ($: cheerio.CheerioAPI, html: string): boolean => {
+  const title = $('title').first().text().trim();
+  const bodyText = $('body')
+    .text()
+    .replace(/\s+/g, ' ')
+    .trim();
+  const normalizedContent = `${title} ${bodyText} ${html}`.toLowerCase();
+
+  if (blockedPatterns.some((pattern) => pattern.test(normalizedContent))) {
+    return true;
+  }
+
+  const hasChallengeForm = $('form#challenge-form, form[action*="/cdn-cgi/l/chk_jschl"]').length > 0;
+  const hasCloudflareProtection = /d?dos protection by cloudflare/i.test(html);
+
+  return hasChallengeForm || hasCloudflareProtection;
+};
+
 router.post('/audit', validateAuditRequest, async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { url } = req.body as { url: string };
@@ -25,6 +64,10 @@ router.post('/audit', validateAuditRequest, async (req: Request, res: Response, 
     }
 
     const $ = cheerio.load(response.data);
+    if (detectBlockedContent($, response.data)) {
+      throw new AppError(422, blockedMessage);
+    }
+
     const title = $('title').first().text().trim() || null;
     const metaDescription = $('meta[name="description"]').attr('content')?.trim() || null;
     const visibleText = $('body')
